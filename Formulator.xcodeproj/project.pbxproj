@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		42235C601D5DCDE0008ABC9D /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42235C5E1D5DCDD8008ABC9D /* Alamofire.framework */; };
+		42235C611D5DCDE0008ABC9D /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 42235C5E1D5DCDD8008ABC9D /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		42235C651D5DE03E008ABC9D /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42235C631D5DD56B008ABC9D /* SwiftyJSON.framework */; };
+		42235C661D5DE03E008ABC9D /* SwiftyJSON.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 42235C631D5DD56B008ABC9D /* SwiftyJSON.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4231F3F21D5537F60024C0F6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4231F3F11D5537F60024C0F6 /* AppDelegate.swift */; };
 		4231F3F41D5537F60024C0F6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4231F3F31D5537F60024C0F6 /* ViewController.swift */; };
 		4231F3F71D5537F60024C0F6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4231F3F51D5537F60024C0F6 /* Main.storyboard */; };
@@ -33,7 +37,24 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		42235C621D5DCDE0008ABC9D /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				42235C661D5DE03E008ABC9D /* SwiftyJSON.framework in Embed Frameworks */,
+				42235C611D5DCDE0008ABC9D /* Alamofire.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		42235C5E1D5DCDD8008ABC9D /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
+		42235C631D5DD56B008ABC9D /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/iOS/SwiftyJSON.framework; sourceTree = "<group>"; };
 		4231F3EE1D5537F60024C0F6 /* Formulator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Formulator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4231F3F11D5537F60024C0F6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4231F3F31D5537F60024C0F6 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -54,6 +75,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				42235C651D5DE03E008ABC9D /* SwiftyJSON.framework in Frameworks */,
+				42235C601D5DCDE0008ABC9D /* Alamofire.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -77,6 +100,8 @@
 		4231F3E51D5537F60024C0F6 = {
 			isa = PBXGroup;
 			children = (
+				42235C631D5DD56B008ABC9D /* SwiftyJSON.framework */,
+				42235C5E1D5DCDD8008ABC9D /* Alamofire.framework */,
 				4231F3F01D5537F60024C0F6 /* Formulator */,
 				4231F4051D5537F60024C0F6 /* FormulatorTests */,
 				4231F4101D5537F60024C0F6 /* FormulatorUITests */,
@@ -135,6 +160,7 @@
 				4231F3EA1D5537F60024C0F6 /* Sources */,
 				4231F3EB1D5537F60024C0F6 /* Frameworks */,
 				4231F3EC1D5537F60024C0F6 /* Resources */,
+				42235C621D5DCDE0008ABC9D /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -401,6 +427,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = Formulator/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.kayako.Formulator;
@@ -412,6 +442,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = Formulator/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.kayako.Formulator;
@@ -484,6 +518,7 @@
 				4231F4181D5537F60024C0F6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		4231F4191D5537F60024C0F6 /* Build configuration list for PBXNativeTarget "FormulatorTests" */ = {
 			isa = XCConfigurationList;
@@ -492,6 +527,7 @@
 				4231F41B1D5537F60024C0F6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		4231F41C1D5537F60024C0F6 /* Build configuration list for PBXNativeTarget "FormulatorUITests" */ = {
 			isa = XCConfigurationList;
@@ -500,6 +536,7 @@
 				4231F41E1D5537F60024C0F6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
