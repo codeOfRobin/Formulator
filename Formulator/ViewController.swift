@@ -10,6 +10,17 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 
+
+extension String: Suggestable {
+	var textualDescription: String {
+		return self
+	}
+}
+
+protocol Suggestable {
+	var textualDescription: String { get }
+}
+
 class ViewController: UIViewController {
 
 	var prop1 = 0
@@ -34,12 +45,18 @@ class ViewController: UIViewController {
 		
 		textField.gatherSuggestions = {
 			
-			Alamofire.request(.GET, "https://a4825bf2.ngrok.io", parameters: nil, encoding: .JSON, headers: nil).validate().responseJSON(completionHandler: { (response) in
+			Alamofire.request(.GET, "https://08e7c592.ngrok.io", parameters: nil, encoding: .JSON, headers: nil).validate().responseJSON(completionHandler: { (response) in
 				switch response.result {
 				case .Success:
 					if let value = response.result.value {
-						let json = JSON(value)
-						print("JSON: \(json)")
+						let jsonResult = JSON(value)
+						if let suggestions = jsonResult.array {
+							let suggestableArray: [Suggestable] = suggestions.map({ (suggestion) -> Suggestable in
+								return suggestion.string!
+							})
+							let nonOptionalSuggestions = suggestableArray.flatMap {$0}
+							textField.showSuggestions(nonOptionalSuggestions)
+ 						}
 					}
 					case .Failure(let error):
 						print(error)
@@ -48,10 +65,6 @@ class ViewController: UIViewController {
 		}
 		textField.borderStyle = .Bezel
 		view.addSubview(textField)
-		let red = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
-		red.backgroundColor = UIColor.redColor()
-		textField.addSubview(red)
-		textField.clipsToBounds = false
 	}
 
 	override func didReceiveMemoryWarning() {
@@ -81,12 +94,40 @@ class FormButton: UIButton {
 	}
 }
 
-class FormTextField: UITextField {
+
+
+
+
+
+class FormTextField: UITextField, UITableViewDelegate, UITableViewDataSource {
+	
+	let tableView = UITableView(frame: CGRectZero)
+	var suggestions: [Suggestable] = []
 	
 	override init(frame: CGRect) {
 		super.init(frame: frame)
-		
+		self.clipsToBounds = false
+		tableView.frame = CGRect(x: frame.minX, y: frame.maxY, width: frame.width, height: 100)
+		tableView.layer.borderColor = UIColor.blueColor().CGColor
+		tableView.layer.borderWidth = 1.0
+		tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
+		tableView.dataSource = self
+		tableView.delegate = self
 		self.initialize()
+	}
+	
+	func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+		return 1
+	}
+	
+	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+		return suggestions.count
+	}
+	
+	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+		let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
+		cell.textLabel?.text = suggestions[indexPath.row].textualDescription
+		return cell
 	}
 	
 	required init(coder aDecoder: NSCoder) {
@@ -102,8 +143,15 @@ class FormTextField: UITextField {
 	
 	var gatherSuggestions: EmptyClosure = {}
 	
+	func showSuggestions(suggestionObjects: [Suggestable]) {
+		self.suggestions = suggestionObjects
+		self.superview?.addSubview(tableView)
+		tableView.reloadData()
+	}
+	
 	@objc private func textFieldChanged(sender: UIButton) {
 		validateText()
 		gatherSuggestions()
+		
 	}
 }
